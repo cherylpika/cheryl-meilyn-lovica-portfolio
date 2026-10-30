@@ -49,6 +49,13 @@ body {
   transition: background .3s ease, color .3s ease;
 }
 
+body.certificate-dialog-open {
+  position: fixed;
+  inset: var(--certificate-scroll-offset) 0 auto;
+  width: 100%;
+  overflow: hidden;
+}
+
 h1,
 h2,
 h3 {
@@ -856,6 +863,29 @@ li {
   padding: 24px;
 }
 
+.course-card-with-image {
+  overflow: hidden;
+  padding: 0;
+}
+
+.course-image {
+  display: block;
+  width: calc(100% - 48px);
+  height: auto;
+  object-fit: contain;
+  background: #fff;
+  margin: 20px auto 0;
+}
+
+.course-content {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+}
+
 .course-meta {
   display: flex;
   width: 100%;
@@ -893,26 +923,31 @@ li {
   display: inline-block;
   margin-top: auto;
   padding: 8px 17px;
-  border: 1px solid var(--wine);
-  border-radius: 99px;
-  background: transparent;
-  color: var(--wine);
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: var(--gradient);
+  color: var(--section);
   cursor: pointer;
   font-size: .9rem;
   font-weight: 600;
   font-family: inherit;
   text-decoration: none;
-  transition: background .2s ease, color .2s ease, transform .2s ease;
+  transition: transform .2s ease, box-shadow .2s ease;
 }
 
 .course-card .course-link {
-  margin-top: 22px;
+  width: 100%;
+  margin-top: auto;
+  text-align: center;
+}
+
+.course-card .course-description {
+  margin-bottom: 24px;
 }
 
 .course-link:hover {
   transform: translateY(-2px);
-  background: var(--wine);
-  color: var(--section);
+  box-shadow: 0 6px 16px rgba(128, 0, 32, .2);
 }
 
 .credential-card {
@@ -1087,6 +1122,7 @@ dialog {
   position: fixed;
   width: min(900px, 94vw);
   max-width: none;
+  overscroll-behavior: contain;
   max-height: 90vh;
   margin: auto;
   padding: 24px;

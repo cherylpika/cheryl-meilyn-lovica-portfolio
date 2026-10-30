@@ -45,6 +45,7 @@ addEventListener('scroll', () => {
 
 // Certificate viewer
 const dlg = document.getElementById('cert');
+let certificateScrollY = 0;
 document.querySelectorAll('.internship-docs button, .certificate-viewer').forEach(btn => btn.addEventListener('click', () => {
   const title = document.getElementById('ct');
   title.textContent = btn.dataset.title || '';
@@ -58,9 +59,17 @@ document.querySelectorAll('.internship-docs button, .certificate-viewer').forEac
   img.src = isPdf ? '' : encodeURI(file);
   img.alt = btn.dataset.title ? 'Certificate: ' + btn.dataset.title : btn.dataset.alt || '';
   pdf.src = isPdf ? encodeURI(file) : 'about:blank';
+  certificateScrollY = window.scrollY;
+  document.body.style.setProperty('--certificate-scroll-offset', `-${certificateScrollY}px`);
+  document.body.classList.add('certificate-dialog-open');
   dlg.showModal();
 }));
 
+dlg.addEventListener('close', () => {
+  document.body.classList.remove('certificate-dialog-open');
+  document.body.style.removeProperty('--certificate-scroll-offset');
+  window.scrollTo(0, certificateScrollY);
+});
 dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && dlg.open) dlg.close();
